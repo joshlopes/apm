@@ -1,5 +1,18 @@
 import * as React from 'react';
-import { Paper, Tabs, Tab, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+    Paper,
+    Tabs,
+    Tab,
+    Box,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Link
+} from '@mui/material';
+import Typography from "@mui/material/Typography";
 
 function TabPanel(props: any) {
     const { children, value, index, ...other } = props;
@@ -59,6 +72,7 @@ const ContestTable = () => {
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Age</TableCell>
+                        <TableCell>Details</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -67,6 +81,9 @@ const ContestTable = () => {
                             <TableCell>{row.id}</TableCell>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.age}</TableCell>
+                            <TableCell>
+                                <Link href={`/contest/${row.id}`}>View Details</Link>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -76,6 +93,9 @@ const ContestTable = () => {
 
     return (
         <Paper sx={{ bgcolor: 'background.paper' }}>
+            <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
+                Concurso de votação
+            </Typography>
             <Tabs
                 value={value}
                 onChange={handleChange}

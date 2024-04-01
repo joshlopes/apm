@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import ReactPlayer from 'react-player';
 
 declare global {
     interface Window {
@@ -8,36 +9,54 @@ declare global {
     }
 }
 
-const ContestOverview = () => {
-    const [ReactPlayer, setReactPlayer] = useState<any>(null);
+const ContestOverview: React.FC = () => {
     const title = "Contest Title"; // Replace with your contest title
     const videoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Replace with your video URL
 
-    useEffect(() => {
-        import('react-player').then(({ default: ReactPlayer }) => {
-            setReactPlayer(() => ReactPlayer);
-        });
-    }, []);
-
-    useEffect(() => {
+    React.useEffect(() => {
         if (typeof window !== 'undefined') {
-            // Load the Facebook SDK
-            (function(d, s, id) {
-                var js: HTMLScriptElement, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s) as HTMLScriptElement; js.id = id;
-                js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0";
-                if (fjs.parentNode) {
-                    fjs.parentNode.insertBefore(js, fjs);
-                }
+            window.fbAsyncInit = function() {
+                window.FB.init({
+                    appId      : '854813476409054',
+                    xfbml      : true,
+                    version    : 'v19.0',
+                });
+                window.FB.AppEvents.logPageView();
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s) as HTMLScriptElement;
+                js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode?.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         }
     }, []);
 
     return (
-        <Box>
-            <Typography typography={'h4'}>{title}</Typography>
-        </Box>
+        <>
+            <Box>
+                <Typography typography={'h4'}>{title}</Typography>
+                <ReactPlayer url={videoUrl}/>
+                <div className="fb-like"
+                     data-href="https://developers.facebook.com/docs/plugins/"
+                     data-width=""
+                     data-layout=""
+                     data-action=""
+                     data-size=""
+                     data-share="true"
+                ></div>
+                <div className="fb-like"
+                     data-href={window.location.href}
+                     data-width=""
+                     data-layout="standard"
+                     data-action="like"
+                     data-size="small">
+                </div>
+            </Box>
+        </>
     );
 }
 
