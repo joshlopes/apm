@@ -17,7 +17,7 @@ const ContestOverview: React.FC = () => {
         if (typeof window !== 'undefined') {
             window.fbAsyncInit = function() {
                 window.FB.init({
-                    appId      : '854813476409054',
+                    appId      : '993858867377788',
                     xfbml      : true,
                     version    : 'v19.0',
                 });
@@ -41,19 +41,13 @@ const ContestOverview: React.FC = () => {
                 <Typography typography={'h4'}>{title}</Typography>
                 <ReactPlayer url={videoUrl}/>
                 <div className="fb-like"
-                     data-href="https://developers.facebook.com/docs/plugins/"
-                     data-width=""
-                     data-layout=""
-                     data-action=""
-                     data-size=""
-                     data-share="true"
-                ></div>
-                <div className="fb-like"
                      data-href={window.location.href}
                      data-width=""
                      data-layout="standard"
                      data-action="like"
-                     data-size="small">
+                     data-size="large"
+                     data-share="true"
+                >
                 </div>
             </Box>
         </>
