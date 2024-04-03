@@ -12,6 +12,7 @@ import OrmContestantRepository from "../Orm/Contestant/OrmContestantRepository";
 import OrmVoteRepository from "../Orm/Contestant/OrmVoteRepository";
 import VoteContestantCommandHandler
     from "../../Application/Write/Contestant/VoteContestant/VoteContestantCommandHandler";
+import DeleteVoteCommandHandler from "../../Application/Write/Contestant/DeleteVote/DeleteVoteCommandHandler";
 
 const myContainer = new Container();
 
@@ -24,6 +25,7 @@ myContainer.bind<VoteRepository>(TYPES.VoteRepository).to(OrmVoteRepository);
 myContainer.bind<CommandHandler>(TYPES.CommandHandler).to(GetContestantCommandHandler);
 myContainer.bind<CommandHandler>(TYPES.CommandHandler).to(ListAllContestantsCommandHandler);
 myContainer.bind<CommandHandler>(TYPES.CommandHandler).to(VoteContestantCommandHandler);
+myContainer.bind<CommandHandler>(TYPES.CommandHandler).to(DeleteVoteCommandHandler);
 myContainer.bind<CommandHandlerManager>(CommandHandlerManager).toSelf();
 
 // Events

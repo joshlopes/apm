@@ -12,6 +12,6 @@ export default class ListAllContestantsCommandHandler implements CommandHandler 
     ){}
 
     async handle(command: ListAllContestantsCommand): Promise<Contestant[]> {
-        return this.repository.findAll();
+        return this.repository.findAll(command.category);
     }
 }

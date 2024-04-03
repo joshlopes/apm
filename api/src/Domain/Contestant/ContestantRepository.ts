@@ -11,5 +11,5 @@ export default interface ContestantRepository {
 
     delete(id: ContestantId): Promise<void>;
 
-    findAll(): Promise<Contestant[]>;
+    findAll(category?: string): Promise<Contestant[]>;
 }

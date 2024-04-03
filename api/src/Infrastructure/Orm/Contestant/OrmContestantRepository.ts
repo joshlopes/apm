@@ -31,6 +31,7 @@ export default class OrmContestantRepository implements ContestantRepository {
     async upsert(contestant: Contestant): Promise<Contestant> {
         const data = {
             name: contestant.name,
+            category: contestant.category,
             video_url: contestant.videoUrl,
             updated_at: new Date(),
         };
@@ -41,6 +42,7 @@ export default class OrmContestantRepository implements ContestantRepository {
                 create: {
                     id: contestant.id.toString(),
                     name: contestant.name,
+                    category: contestant.category,
                     video_url: contestant.videoUrl,
                     created_at: new Date()
                 },
@@ -64,8 +66,12 @@ export default class OrmContestantRepository implements ContestantRepository {
         });
     }
 
-    async findAll(): Promise<Contestant[]> {
+    async findAll(category?: string): Promise<Contestant[]> {
+        const whereData = category ? { category: category } : undefined;
         const contestants = await this.ormClient.contestant.findMany({
+            where: {
+                ...whereData,
+            },
             include: {
                 votes: true
             }

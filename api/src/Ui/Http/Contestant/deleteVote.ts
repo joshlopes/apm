@@ -1,20 +1,19 @@
+import { uuidv7 } from "uuidv7";
 import { RequestHandler, Request, Response } from "express";
 import {handleCommand} from "../handleCommandUtil";
-import VoteContestantCommand from "../../../Application/Write/Contestant/VoteContestant/VoteContestantCommand";
 import VoteId from "../../../Domain/Contestant/VoteId";
 import ContestantId from "../../../Domain/Contestant/ContestantId";
+import DeleteVoteCommand from "../../../Application/Write/Contestant/DeleteVote/DeleteVoteCommand";
 
-export const vote: RequestHandler = async (req: Request, resp: Response) => {
-    const voteId = VoteId.create()
+export const deleteVote: RequestHandler = async (req: Request, resp: Response) => {
     await handleCommand(
-        new VoteContestantCommand(
-            voteId,
+        new DeleteVoteCommand(
+            VoteId.fromString(req.params.voteId),
             ContestantId.fromString(req.params.id),
-            req.body.ip
         ),
         resp,
         () => {
-            resp.status(200).send({id: voteId.toString()})
+            resp.status(200).send()
         }
     );
 }

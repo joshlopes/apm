@@ -5,12 +5,23 @@ import ListAllContestantsCommand
 import Contestant from "../../../Domain/Contestant/Contestant";
 
 export const list: RequestHandler = async (req: Request, resp: Response) => {
+    const category = req.query.category;
+
     await handleCommand(
-        new ListAllContestantsCommand(),
+        new ListAllContestantsCommand(typeof category === 'string' && category !== 'undefined' ? category : undefined),
         resp,
         (contestants: Contestant[]) => {
             resp.status(200).send({
-                results: contestants.map((contestant: Contestant) => contestant.toArray())
+                results: contestants.map((contestant: Contestant) => {
+                    return {
+                        id: contestant.id.toString(),
+                        name: contestant.name,
+                        category: contestant.category,
+                        video_url: contestant.videoUrl,
+                        votes: contestant.votes?.length || 0,
+                        created_at: contestant.created_at
+                    }
+                })
             })
         }
     );

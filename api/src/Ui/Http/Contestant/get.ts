@@ -9,7 +9,14 @@ export const get: RequestHandler = async (req: Request, resp: Response) => {
         new GetContestantCommand(ContestantId.fromString(req.params.id)),
         resp,
         (contestant: Contestant) => {
-            resp.status(200).send(contestant.toArray())
+            resp.status(200).send({
+                id: contestant.id,
+                name: contestant.name,
+                video_url: contestant.videoUrl,
+                votes: contestant.votes?.length || 0,
+                created_at: contestant.created_at,
+                updated_at: contestant.updated_at
+            })
         }
     );
 }

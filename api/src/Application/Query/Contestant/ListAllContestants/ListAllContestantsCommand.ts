@@ -1,5 +1,7 @@
 import Command from "../../../../Domain/Command/Command";
 
 export default class ListAllContestantsCommand implements Command {
-    constructor(){}
+    constructor(
+        public readonly category?: string
+    ){}
 }

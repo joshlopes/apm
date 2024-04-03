@@ -12,16 +12,17 @@ export const createContestant = async (): Promise<Contestant> => {
     return myContainer.get<ContestantRepository>(TYPES.ContestantRepository).upsert(
         new Contestant(
             ContestantId.create(),
+            'name',
+            'A',
             'http://video.url',
-            uuidv7()
         )
     )
 }
 
-export const createVote = async(contestant: Contestant): Promise<void> => {
+export const createVote = async(voteId: VoteId, contestant: Contestant): Promise<void> => {
     await myContainer.get<VoteRepository>(TYPES.VoteRepository).create(
         new Vote(
-            VoteId.create(),
+            voteId,
             '1.1.1.1',
             contestant
         )

@@ -4,6 +4,7 @@ import ContestantId from "./ContestantId";
 export type ContestantArray = {
     id: string,
     name: string,
+    category: string,
     video_url: string,
     votes?: VoteArray[]
     created_at?: Date|undefined,
@@ -14,6 +15,7 @@ export default class Contestant {
     constructor(
         public id: ContestantId,
         public name: string,
+        public category: string,
         public videoUrl: string,
         public votes?: Vote[],
         public created_at?: Date,
@@ -24,6 +26,7 @@ export default class Contestant {
         return new Contestant(
             ContestantId.fromString(array.id),
             array.name,
+            array.category,
             array.video_url,
             array.votes ? array.votes.map(vote => Vote.fromArray(vote)) : [],
             array.created_at,
@@ -35,6 +38,7 @@ export default class Contestant {
         return {
             id: this.id.toString(),
             name: this.name,
+            category: this.category,
             video_url: this.videoUrl,
             votes: this.votes?.map(vote => vote.toArray()),
             created_at: this.created_at,
