@@ -23,7 +23,7 @@ describe('POST /api/contestants/:id/vote', () => {
             .send({
                 ip: '123.123.123.123'
             })
-            .expect(201);
+            .expect(200);
 
         // Query the database
         const vote = await prismaClient.vote.findFirst({include: {contestant: true}});
@@ -31,7 +31,7 @@ describe('POST /api/contestants/:id/vote', () => {
         // Assert that created
         expect(vote).toBeDefined();
         if (vote instanceof Vote) {
-            expect(vote.contestant?.id).toBe(contestant.id);
+            expect(vote.contestant?.id).toBe(contestant.id.toString());
             expect(vote.ip).toBe('123.123.123.123');
         }
     });

@@ -20,7 +20,7 @@ describe('DELETE /api/contestants/:id/vote/:voteId', () => {
         const voteId = VoteId.create();
         await createVote(voteId, contestant);
 
-        expect(prismaClient.vote.findUniqueOrThrow({where: {id: voteId.toString()}})).not.toBeNull();
+        expect(await prismaClient.vote.findUniqueOrThrow({where: {id: voteId.toString()}})).not.toBeNull();
 
         // Send request
         const response: Response = await request(server)
@@ -29,6 +29,6 @@ describe('DELETE /api/contestants/:id/vote/:voteId', () => {
         expect(response.status).toEqual(200);
 
         // Check if the record was deleted
-        expect(prismaClient.vote.findUnique({where: {id: voteId.toString()}})).toBeNull();
+        expect(await prismaClient.vote.findUnique({where: {id: voteId.toString()}})).toBeNull();
     });
 });

@@ -10,7 +10,7 @@ export const get: RequestHandler = async (req: Request, resp: Response) => {
         resp,
         (contestant: Contestant) => {
             resp.status(200).send({
-                id: contestant.id,
+                id: contestant.id.toString(),
                 name: contestant.name,
                 video_url: contestant.videoUrl,
                 votes: contestant.votes?.length || 0,

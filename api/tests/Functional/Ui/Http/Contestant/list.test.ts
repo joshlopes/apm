@@ -25,8 +25,10 @@ describe('GET /api/contestants', () => {
         expect(response.body.results[0].id).toBe(contestant1.id.toString())
         expect(response.body.results[0].name).toBe(contestant1.name)
         expect(response.body.results[0].video_url).toBe(contestant1.videoUrl)
+        expect(response.body.results[0].votes).toBe(0)
         expect(response.body.results[1].id).toBe(contestant2.id.toString())
         expect(response.body.results[1].name).toBe(contestant2.name)
         expect(response.body.results[1].video_url).toBe(contestant2.videoUrl)
+        expect(response.body.results[1].votes).toBe(0)
     });
 })
