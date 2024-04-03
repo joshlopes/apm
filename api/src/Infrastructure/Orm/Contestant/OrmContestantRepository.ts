@@ -77,7 +77,7 @@ export default class OrmContestantRepository implements ContestantRepository {
             }
         });
 
-        return contestants.map(contestant => Contestant.fromArray(contestant));
+        return contestants.map((contestant: any) => Contestant.fromArray(contestant));
     }
 
 }
