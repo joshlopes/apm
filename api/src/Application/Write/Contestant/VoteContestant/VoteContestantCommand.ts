@@ -1,0 +1,11 @@
+import Command from "../../../../Domain/Command/Command";
+import VoteId from "../../../../Domain/Contestant/VoteId";
+import ContestantId from "../../../../Domain/Contestant/ContestantId";
+
+export default class VoteContestantCommand implements Command {
+    constructor(
+        public id: VoteId,
+        public contestantId: ContestantId,
+        public ip: string
+    ) {}
+}

@@ -3,12 +3,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ReactPlayer from 'react-player';
 
-declare global {
-    interface Window {
-        FB: any;
-    }
-}
-
 const ContestOverview: React.FC = () => {
     const title = "Contest Title"; // Replace with your contest title
     const videoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Replace with your video URL

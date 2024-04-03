@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  database:
+    image: mariadb:11.3.2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: apm_concurso
+      MYSQL_USER: apm
+      MYSQL_PASSWORD: apm
+    ports:
+      - "${API_DATABASE_PORT:-3306}:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "/usr/local/bin/healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      interval: 2s
+      retries: 120
+
+  node-app:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+      target: dev
+    env_file:
+      - .env
+    ports:
+      - "${API_SERVER_PORT:-3003}:3003"
+    restart: always
+    volumes:
+      - ./:/app
+    depends_on:
+      - "database"
+
+volumes:
+  mariadb_data:
