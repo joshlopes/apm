@@ -10,6 +10,7 @@ datasource db {
 
 model contestant {
   id            String   @id @default(uuid())
+  sequence      Int
   name          String
   video_url     String
   thumbnail_url String

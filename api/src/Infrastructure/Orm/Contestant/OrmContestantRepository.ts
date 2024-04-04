@@ -31,6 +31,7 @@ export default class OrmContestantRepository implements ContestantRepository {
     async upsert(contestant: Contestant): Promise<Contestant> {
         const data = {
             name: contestant.name,
+            sequence: contestant.sequence,
             category: contestant.category,
             video_url: contestant.videoUrl,
             thumbnail_url: contestant.thumbnailUrl,
@@ -75,7 +76,7 @@ export default class OrmContestantRepository implements ContestantRepository {
                 votes: true
             },
             orderBy: {
-                name: 'asc'
+                sequence: 'asc'
             }
         });
 
