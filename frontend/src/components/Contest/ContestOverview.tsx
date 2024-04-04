@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 import {useParams} from "react-router-dom";
 import {useApi} from "../../context/ApiProvider";
 import {Contestant} from "../../types/contestant";
-import {Button, Card, CardContent, Grid} from "@mui/material";
+import {Button, Card, CardContent, CircularProgress, Grid} from "@mui/material";
 import {enqueueSnackbar} from "notistack";
 import ShareComponent from "../Share/ShareComponent";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
@@ -19,6 +19,7 @@ const ContestOverview: React.FC = () => {
     const [contestant, setContestant] = React.useState<Contestant|undefined>();
     const [hasVoted, setHasVoted] = React.useState(localStorage.getItem(`vote${id}`) !== null);
     const [ip, setIp] = React.useState('');
+    const [isVoting, setIsVoting] = React.useState(true);
 
     useEffect(() => {
         getIp().then(ip => setIp(ip));
@@ -34,6 +35,9 @@ const ContestOverview: React.FC = () => {
     }, [id, api, getIp]);
 
     const handleVote = () => {
+        if (isVoting) return;
+
+        setIsVoting(true);
         api?.post(`/contestants/${id}/vote`, {ip: ip})
             .then(response => {
                 if (!response.ok) {
@@ -41,6 +45,7 @@ const ContestOverview: React.FC = () => {
                 }
                 localStorage.setItem(`vote${id}`, response.body.id);
                 setHasVoted(true)
+                setIsVoting(false);
                 enqueueSnackbar('Voto registado com successo!', {variant: 'success'})
                 if (contestant) {
                     setContestant({...contestant, votes: contestant.votes + 1});
@@ -48,17 +53,21 @@ const ContestOverview: React.FC = () => {
             })
             .catch(error => {
                 console.error(error)
+                setIsVoting(false);
                 enqueueSnackbar('Erro ao registar voto!', {variant: 'error'})
             })
     }
 
     const handleRemoveVote = () => {
+        if (isVoting) return;
+
         const voteId = localStorage.getItem(`vote${id}`)
         if (!voteId) {
             enqueueSnackbar('Voto não encontrado!', {variant: 'error'})
             return
         }
 
+        setIsVoting(true);
         api?.delete(`/contestants/${id}/vote/${voteId}`)
             .then(response => {
                 if (!response.ok) {
@@ -68,6 +77,7 @@ const ContestOverview: React.FC = () => {
 
                 localStorage.removeItem(`vote${id}`);
                 setHasVoted(false)
+                setIsVoting(false)
                 enqueueSnackbar('Voto removido com successo!', {variant: 'success'})
 
                 if (contestant) {
@@ -76,6 +86,7 @@ const ContestOverview: React.FC = () => {
             })
             .catch(error => {
                 console.error(error)
+                setIsVoting(false)
                 enqueueSnackbar('Erro ao remover voto!', {variant: 'error'})
             })
     }
@@ -107,14 +118,28 @@ const ContestOverview: React.FC = () => {
                                     <Grid container spacing={2} sx={{ mt: 2, justifyContent: 'center' }}>
                                         <Grid item>
                                             {hasVoted ?
-                                                <Button onClick={handleRemoveVote} color={"error"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }}>
-                                                    <DeleteIcon sx={{ mr: 1 }} />
-                                                    Retirar Gosto
+                                                <Button onClick={handleRemoveVote} color={"error"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }} disabled={isVoting}>
+                                                    {isVoting
+                                                        ? <>
+                                                            <CircularProgress size={24} sx={{ mr: 1 }} />
+                                                            A retirar gosto...
+                                                        </>
+                                                        : <>
+                                                            <DeleteIcon sx={{ mr: 1 }} />
+                                                            Retirar Gosto
+                                                        </>}
                                                 </Button>
                                                 :
-                                                <Button onClick={handleVote} color={"success"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }}>
-                                                    <ThumbUpAltIcon sx={{ mr: 1 }} />
-                                                    Gosto
+                                                <Button onClick={handleVote} color={"success"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }} disabled={isVoting}>
+                                                    {isVoting
+                                                        ? <>
+                                                            <CircularProgress size={24} sx={{ mr: 1 }} />
+                                                            A enviar...
+                                                        </>
+                                                        : <>
+                                                            <ThumbUpAltIcon sx={{ mr: 1 }} />
+                                                            Gosto
+                                                        </>}
                                                 </Button>
                                             }
                                         </Grid>
