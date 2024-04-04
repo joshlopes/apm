@@ -3,6 +3,7 @@ import ContestantId from "./ContestantId";
 
 export type ContestantArray = {
     id: string,
+    sequence: number,
     name: string,
     category: string,
     video_url: string,
@@ -15,6 +16,7 @@ export type ContestantArray = {
 export default class Contestant {
     constructor(
         public id: ContestantId,
+        public sequence: number,
         public name: string,
         public category: string,
         public videoUrl: string,
@@ -27,6 +29,7 @@ export default class Contestant {
     static fromArray(array: ContestantArray): Contestant {
         return new Contestant(
             ContestantId.fromString(array.id),
+            array.sequence,
             array.name,
             array.category,
             array.video_url,
@@ -40,6 +43,7 @@ export default class Contestant {
     toArray(): ContestantArray {
         return {
             id: this.id.toString(),
+            sequence: this.sequence,
             name: this.name,
             category: this.category,
             video_url: this.videoUrl,
