@@ -18,12 +18,19 @@ describe('POST /api/contestants/:id/vote', () => {
         const contestant = await createContestant();
 
         // Send POST request
-        await request(server)
+        const response = await request(server)
             .post('/api/contestants/' + contestant.id + '/vote')
             .send({
                 ip: '123.123.123.123'
             })
             .expect(200);
+
+        // Assert response
+
+        expect(response.body).toBeDefined();
+        expect(response.body.id).toBeDefined();
+        expect(response.body.contestant).toBeDefined();
+        expect(response.body.contestant.id).toBe(contestant.id.toString());
 
         // Query the database
         const vote = await prismaClient.vote.findFirst({include: {contestant: true}});

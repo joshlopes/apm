@@ -98,6 +98,11 @@ db-diff db.diff db.create_migration db-create-migration:
 db-migrate:
 	$(DOCKER_COMPOSE_EXEC) node-app npx prisma migrate dev
 
+.PHONY: db-test-setup db.test.setup
+## [DATABASE] Reset Database for tests
+db-test-setup db.test.setup:
+	$(DOCKER_COMPOSE_EXEC) node-app npm run test:setup
+
 ## [Database] Undo last migration
 db-migrate-undo:
 	$(DOCKER_NODE_COMPOSE_RUN) npx sequelize-cli db:migrate:undo --url $(DB_DSN)

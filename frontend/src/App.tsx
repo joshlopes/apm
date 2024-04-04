@@ -23,23 +23,24 @@ function Copyright() {
 export default function App() {
     return (
         <>
-            <Box sx={{ bgcolor: 'background.default', pb: 2 }}>
-                <ButtonAppBar />
-                <Container>
-                    <Box sx={{ my: 4 }}>
-                        <BrowserRouter>
-                            <Routes>
-                                <Route index element={<Feed />} />
-                                <Route path="/category/:category" element={<Feed />} />
-                                <Route path="/show/:id" element={<ContestOverview />} />
-                            </Routes>
-                        </BrowserRouter>
-                    </Box>
-                </Container>
-            </Box>
-            <Box>
-                <Copyright />
-            </Box>
+            <BrowserRouter>
+                <Box sx={{ bgcolor: 'background.default', pb: 2 }}>
+                    <ButtonAppBar />
+                    <Container>
+                        <Box sx={{ my: 4 }}>
+                                <Routes>
+                                    <Route index element={<Feed />} />
+                                    <Route path="/category" element={<Feed />} />
+                                    <Route path="/category/:category" element={<Feed />} />
+                                    <Route path="/show/:id" element={<ContestOverview />} />
+                                </Routes>
+                        </Box>
+                    </Container>
+                </Box>
+                <Box>
+                    <Copyright />
+                </Box>
+            </BrowserRouter>
         </>
     );
 }

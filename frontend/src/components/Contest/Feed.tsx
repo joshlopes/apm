@@ -13,7 +13,7 @@ const Feed: React.FC = () => {
     const [contestants, setContestants] = React.useState<Contestant[]>([]);
 
     useEffect(() => {
-        api?.get('/contestants?category='+category)
+        api?.get(`/contestants${category ? `/?category=${category}`:  ''}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch contestants')
@@ -26,11 +26,11 @@ const Feed: React.FC = () => {
                 setContestants([])
                 console.error(error)
             })
-    }, [api]);
+    }, [api, category]);
 
     return (
         <>
-            <Typography typography={'h4'}>{ category ? `Categoria ${category}` : `Participantes`}</Typography>
+            <Typography typography={'h4'} p={2}>{ category ? `Categoria ${category}` : `Participantes`}</Typography>
             <Grid container spacing={3}>
                 {contestants.map((contestant) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={contestant.id}>

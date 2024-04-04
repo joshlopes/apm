@@ -9,13 +9,14 @@ datasource db {
 }
 
 model contestant {
-  id         String   @id @default(uuid())
-  name       String
-  video_url  String
-  category   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  votes      vote[]
+  id            String   @id @default(uuid())
+  name          String
+  video_url     String
+  thumbnail_url String
+  category      String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  votes         vote[]
 }
 
 model vote {

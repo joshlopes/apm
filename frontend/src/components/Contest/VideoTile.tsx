@@ -1,8 +1,8 @@
 import React from "react";
-import {Card, CardContent, CardMedia, Link} from "@mui/material";
+import {Card, CardContent, CardMedia} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Contestant} from "../../types/contestant";
-import ReactPlayer from "react-player";
+import { Link } from "react-router-dom";
 
 interface VideoTileProp {
     contestant: Contestant
@@ -11,16 +11,19 @@ interface VideoTileProp {
 const VideoTile: React.FC<VideoTileProp> = ({contestant}) => {
     return (
         <Card>
-            <CardContent>
-                <ReactPlayer
-                    url={'/assets/'+contestant.video_url}
-                    width='100%'
-                    height='100%'
-                />
-                <Typography variant="h6" noWrap>
-                    <Link href={`/show/${contestant.id}`}>{contestant.name}</Link>
-                </Typography>
-            </CardContent>
+            <Link to={`/show/${contestant.id}`}>
+                <CardContent>
+                    <CardMedia
+                        component="img"
+                        height="140"
+                        image={'/assets/'+contestant.thumbnail_url}
+                        alt={contestant.name}
+                    />
+                    <Typography variant="h6" noWrap>
+                        {contestant.name}
+                    </Typography>
+                </CardContent>
+            </Link>
         </Card>
     )
 }
