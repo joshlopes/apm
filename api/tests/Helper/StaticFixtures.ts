@@ -12,6 +12,7 @@ export const createContestant = async (): Promise<Contestant> => {
     return myContainer.get<ContestantRepository>(TYPES.ContestantRepository).upsert(
         new Contestant(
             ContestantId.create(),
+            1,
             'name',
             'A',
             'http://video.url',
