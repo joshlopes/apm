@@ -19,7 +19,7 @@ const ContestOverview: React.FC = () => {
     const [contestant, setContestant] = React.useState<Contestant|undefined>();
     const [hasVoted, setHasVoted] = React.useState(localStorage.getItem(`vote${id}`) !== null);
     const [ip, setIp] = React.useState('');
-    const [isVoting, setIsVoting] = React.useState(true);
+    const [isVoting, setIsVoting] = React.useState(false);
 
     useEffect(() => {
         getIp().then(ip => setIp(ip));
