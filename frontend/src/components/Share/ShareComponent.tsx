@@ -32,7 +32,7 @@ const CopyLinkButton = () => {
 }
 
 const ShareComponent = () => {
-    const url = 'https://your-website.com'; // Replace with the URL you want to share
+    const url = window.location.href;
 
     return (
         <Grid container spacing={2}>
