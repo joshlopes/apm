@@ -83,7 +83,7 @@ const ContestOverview: React.FC = () => {
     return (
         <>
             {contestant === undefined
-                ? <Typography>Carregando...</Typography>
+                ? <Typography>A carregar...</Typography>
                 :
                     <Grid container justifyContent="center">
                         <Grid item xs={12} md={10}>
