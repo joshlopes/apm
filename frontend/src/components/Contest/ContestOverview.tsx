@@ -31,7 +31,7 @@ const ContestOverview: React.FC = () => {
                 enqueueSnackbar('Erro ao carregar concorrente!', {variant: 'error'})
                 console.error(error)
             })
-    }, [id, api]);
+    }, [id, api, getIp]);
 
     const handleVote = () => {
         api?.post(`/contestants/${id}/vote`, {ip: ip})
