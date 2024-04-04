@@ -9,10 +9,9 @@ import {
     TwitterIcon,
     EmailIcon,
 } from 'react-share';
-import {Button, Grid, IconButton} from '@mui/material';
+import {Grid, IconButton} from '@mui/material';
 import {enqueueSnackbar} from "notistack";
 import FileCopyOutlinedIcon from '@mui/icons-material/Link';
-
 
 const CopyLinkButton = () => {
     const handleCopy = () => {
