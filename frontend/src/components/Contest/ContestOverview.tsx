@@ -9,15 +9,20 @@ import {enqueueSnackbar} from "notistack";
 import ShareComponent from "../Share/ShareComponent";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {useUserStore} from "../../stores/useUserStore";
 
 const ContestOverview: React.FC = () => {
+    const { getIp } = useUserStore();
     const api = useApi()
     const params = useParams();
     const id = params.id;
     const [contestant, setContestant] = React.useState<Contestant|undefined>();
     const [hasVoted, setHasVoted] = React.useState(localStorage.getItem(`vote${id}`) !== null);
+    const [ip, setIp] = React.useState('');
 
     useEffect(() => {
+        getIp().then(ip => setIp(ip));
+
         api?.get(`/contestants/${id}`)
             .then(response => {
                 setContestant(response.body)
@@ -29,25 +34,22 @@ const ContestOverview: React.FC = () => {
     }, [id, api]);
 
     const handleVote = () => {
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                const ip = data.ip;
-                api?.post(`/contestants/${id}/vote`, {ip: ip})
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Failed to vote')
-                        }
-                        localStorage.setItem(`vote${id}`, response.body.id);
-                        setHasVoted(true)
-                        enqueueSnackbar('Voto registado com successo!', {variant: 'success'})
-                    })
-                    .catch(error => {
-                        console.error(error)
-                        enqueueSnackbar('Erro ao registar voto!', {variant: 'error'})
-                    })
+        api?.post(`/contestants/${id}/vote`, {ip: ip})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to vote')
+                }
+                localStorage.setItem(`vote${id}`, response.body.id);
+                setHasVoted(true)
+                enqueueSnackbar('Voto registado com successo!', {variant: 'success'})
+                if (contestant) {
+                    setContestant({...contestant, votes: contestant.votes + 1});
+                }
             })
-        ;
+            .catch(error => {
+                console.error(error)
+                enqueueSnackbar('Erro ao registar voto!', {variant: 'error'})
+            })
     }
 
     const handleRemoveVote = () => {
@@ -67,6 +69,10 @@ const ContestOverview: React.FC = () => {
                 localStorage.removeItem(`vote${id}`);
                 setHasVoted(false)
                 enqueueSnackbar('Voto removido com successo!', {variant: 'success'})
+
+                if (contestant) {
+                    setContestant({...contestant, votes: contestant.votes - 1});
+                }
             })
             .catch(error => {
                 console.error(error)
@@ -81,8 +87,7 @@ const ContestOverview: React.FC = () => {
                 :
                     <Grid container justifyContent="center">
                         <Grid item xs={12} md={10}>
-                            <Typography variant={'h4'}>{contestant.name}</Typography>
-
+                            <Typography variant={'h4'} p={2}>{contestant.name}</Typography>
                             <Card>
                                 <CardContent>
                                     <ReactPlayer
@@ -96,7 +101,7 @@ const ContestOverview: React.FC = () => {
                                             <ShareComponent />
                                         </Grid>
                                         <Grid item xs={12} md={6} container justifyContent="flex-end">
-                                            <Typography variant={'h6'}><b>Votos</b>: {contestant.votes}</Typography>
+                                            <Typography variant={'h6'}><b>Gostos</b>: {contestant.votes}</Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container spacing={2} sx={{ mt: 2, justifyContent: 'center' }}>
@@ -104,7 +109,7 @@ const ContestOverview: React.FC = () => {
                                             {hasVoted ?
                                                 <Button onClick={handleRemoveVote} color={"error"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }}>
                                                     <DeleteIcon sx={{ mr: 1 }} />
-                                                    Retirar Voto
+                                                    Retirar Gosto
                                                 </Button>
                                                 :
                                                 <Button onClick={handleVote} color={"success"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }}>

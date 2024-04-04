@@ -6,6 +6,7 @@ export type ContestantArray = {
     name: string,
     category: string,
     video_url: string,
+    thumbnail_url: string,
     votes?: VoteArray[]
     created_at?: Date|undefined,
     updated_at?: Date|undefined
@@ -17,6 +18,7 @@ export default class Contestant {
         public name: string,
         public category: string,
         public videoUrl: string,
+        public thumbnailUrl: string,
         public votes?: Vote[],
         public created_at?: Date,
         public updated_at?: Date
@@ -28,6 +30,7 @@ export default class Contestant {
             array.name,
             array.category,
             array.video_url,
+            array.thumbnail_url,
             array.votes ? array.votes.map(vote => Vote.fromArray(vote)) : [],
             array.created_at,
             array.updated_at
@@ -40,6 +43,7 @@ export default class Contestant {
             name: this.name,
             category: this.category,
             video_url: this.videoUrl,
+            thumbnail_url: this.thumbnailUrl,
             votes: this.votes?.map(vote => vote.toArray()),
             created_at: this.created_at,
             updated_at: this.updated_at

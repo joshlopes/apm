@@ -33,6 +33,7 @@ export default class OrmContestantRepository implements ContestantRepository {
             name: contestant.name,
             category: contestant.category,
             video_url: contestant.videoUrl,
+            thumbnail_url: contestant.thumbnailUrl,
             updated_at: new Date(),
         };
 
@@ -41,9 +42,7 @@ export default class OrmContestantRepository implements ContestantRepository {
                 where: {id: contestant.id.toString()},
                 create: {
                     id: contestant.id.toString(),
-                    name: contestant.name,
-                    category: contestant.category,
-                    video_url: contestant.videoUrl,
+                    ...data,
                     created_at: new Date()
                 },
                 update: {
@@ -74,6 +73,9 @@ export default class OrmContestantRepository implements ContestantRepository {
             },
             include: {
                 votes: true
+            },
+            orderBy: {
+                name: 'asc'
             }
         });
 

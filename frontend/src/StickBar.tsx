@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import { Link } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export default function ButtonAppBar() {
     return (
@@ -23,14 +23,14 @@ export default function ButtonAppBar() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Link href="/">
+                        <Link to="/">
                             <img src="/apm_logo_site.png" alt="Logo" height={75}/>
                         </Link>
                         <nav>
-                            <Link href="/category/A"><Button color="inherit">Categoria A</Button></Link>
-                            <Link href="/category/B"><Button color="inherit">Categoria B</Button></Link>
-                            <Link href="/category/C"><Button color="inherit">Categoria C</Button></Link>
-                            <Link href="/category/D"><Button color="inherit">Categoria D</Button></Link>
+                            <Link to="/category/A"><Button color="inherit">Categoria A</Button></Link>
+                            <Link to="/category/B"><Button color="inherit">Categoria B</Button></Link>
+                            <Link to="/category/C"><Button color="inherit">Categoria C</Button></Link>
+                            <Link to="/category/D"><Button color="inherit">Categoria D</Button></Link>
                         </nav>
                     </Toolbar>
                 </Container>

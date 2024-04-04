@@ -3,4 +3,5 @@ export type Contestant = {
     id: string,
     name: string,
     video_url: string,
+    thumbnail_url: string,
 }

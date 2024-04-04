@@ -18,6 +18,7 @@ export const list: RequestHandler = async (req: Request, resp: Response) => {
                         name: contestant.name,
                         category: contestant.category,
                         video_url: contestant.videoUrl,
+                        thumbnail_url: contestant.thumbnailUrl,
                         votes: contestant.votes?.length || 0,
                         created_at: contestant.created_at
                     }
