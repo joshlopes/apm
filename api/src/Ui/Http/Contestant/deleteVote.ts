@@ -1,4 +1,3 @@
-import { uuidv7 } from "uuidv7";
 import { RequestHandler, Request, Response } from "express";
 import {handleCommand} from "../handleCommandUtil";
 import VoteId from "../../../Domain/Contestant/VoteId";

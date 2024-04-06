@@ -68,7 +68,7 @@ const ContestOverview: React.FC = () => {
         }
 
         setIsVoting(true);
-        api?.delete(`/contestants/${id}/vote/${voteId}`)
+        api?.post(`/contestants/${id}/vote/${voteId}/delete`, {ip: ip})
             .then(response => {
                 if (!response.ok) {
                     console.error(response)
