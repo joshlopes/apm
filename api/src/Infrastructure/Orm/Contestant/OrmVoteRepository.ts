@@ -49,7 +49,7 @@ export default class OrmVoteRepository implements VoteRepository {
                 id: id.toString()
             },
             data: {
-                is_deleted: true
+                is_deleted: true,
                 deleted_by: ip,
                 deleted_at: new Date()
             }

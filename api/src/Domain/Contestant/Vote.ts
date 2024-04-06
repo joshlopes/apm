@@ -5,7 +5,7 @@ export type VoteArray = {
     id: string,
     ip: string,
     is_deleted: boolean,
-    deleted_by?: string,
+    deleted_by?: string|null,
     contestant?: ContestantArray,
     created_at?: Date|undefined,
     updated_at?: Date|undefined
@@ -16,7 +16,7 @@ export default class Vote {
         public id: VoteId,
         public ip: string,
         public is_deleted: boolean,
-        public deleted_by?: string,
+        public deleted_by?: string|null,
         public contestant?: Contestant,
         public created_at?: Date,
         public updated_at?: Date
