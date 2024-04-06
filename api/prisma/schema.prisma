@@ -25,6 +25,9 @@ model vote {
   contestant_id String
   contestant    contestant @relation(fields: [contestant_id], references: [id])
   ip            String
+  is_deleted    Boolean    @default(false)
+  deleted_by    String?
+  deleted_at    DateTime?
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
 }

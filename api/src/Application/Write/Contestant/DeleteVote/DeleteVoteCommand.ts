@@ -6,5 +6,6 @@ export default class DeleteVoteCommand implements Command {
     constructor(
         public id: VoteId,
         public contestantId: ContestantId,
+        public ip: string
     ) {}
 }

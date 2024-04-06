@@ -8,7 +8,7 @@ const ContestantRouter = express.Router()
 
 ContestantRouter.get('/', list)
 ContestantRouter.get('/:id', get)
+ContestantRouter.post('/:id/vote/:voteId/delete', deleteVote)
 ContestantRouter.post('/:id/vote', vote)
-ContestantRouter.delete('/:id/vote/:voteId', deleteVote)
 
 export default ContestantRouter
