@@ -5,11 +5,13 @@ import ContestantId from "../../../Domain/Contestant/ContestantId";
 import DeleteVoteCommand from "../../../Application/Write/Contestant/DeleteVote/DeleteVoteCommand";
 
 export const deleteVote: RequestHandler = async (req: Request, resp: Response) => {
+    console.log(req.ip, req.ips)
+
     await handleCommand(
         new DeleteVoteCommand(
             VoteId.fromString(req.params.voteId),
             ContestantId.fromString(req.params.id),
-            req.body.ip ?? ''
+            req.body.ip ?? req.ip ?? ''
         ),
         resp,
         () => {

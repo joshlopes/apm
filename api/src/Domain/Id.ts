@@ -1,5 +1,5 @@
 import { AbstractStringVo } from './AbstractStringVo'
-import { uuidv7 } from 'uuidv7'
+import { uuidv7, UUID } from 'uuidv7'
 
 export default class Id extends AbstractStringVo<Id> {
   static create (): Id {
@@ -7,6 +7,6 @@ export default class Id extends AbstractStringVo<Id> {
   }
 
   static fromString (value: string): Id {
-    return new Id(value)
+    return new Id(UUID.parse(value).toString())
   }
 }

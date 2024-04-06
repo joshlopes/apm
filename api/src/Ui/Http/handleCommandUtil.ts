@@ -25,6 +25,6 @@ export async function handleCommand(
             return;
         }
 
-        resp.status(500).send({message: error.message});
+        resp.status(500).send({message: 'There was a problem processing your request. Please try again later.'});
     }
 }
