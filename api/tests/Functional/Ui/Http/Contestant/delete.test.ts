@@ -26,7 +26,7 @@ describe('DELETE /api/contestants/:id/vote/:voteId', () => {
         const response: Response = await request(server)
             .post('/api/contestants/' + contestant.id + '/vote/' + voteId + '/delete')
             .send({
-                ip: '123.123.123.123'
+                ip: '1.1.1.1'
             })
 
         expect(response.status).toEqual(200);

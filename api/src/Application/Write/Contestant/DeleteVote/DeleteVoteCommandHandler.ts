@@ -17,7 +17,7 @@ export default class DeleteVoteCommandHandler implements CommandHandler {
             throw new Error(`Vote ${vote.id.toString()} doesn't belong to ${command.contestantId.toString()} contestant`)
         }
         if (vote.ip !== command.ip) {
-            throw new Error('Problem deleting vote')
+            throw new Error(`Your ip ${command.ip} doesn't match the vote ip ${vote.ip}`)
         }
 
         return await this.voteRepository.delete(command.id, command.ip);
