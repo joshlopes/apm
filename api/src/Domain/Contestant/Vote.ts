@@ -15,9 +15,9 @@ export default class Vote {
     constructor(
         public id: VoteId,
         public ip: string,
-        public is_deleted: boolean,
-        public deleted_by?: string|null,
         public contestant?: Contestant,
+        public is_deleted: boolean = false,
+        public deleted_by?: string|null,
         public created_at?: Date,
         public updated_at?: Date
     ) {}
@@ -26,9 +26,9 @@ export default class Vote {
         return new Vote(
             VoteId.fromString(array.id),
             array.ip,
+            array.contestant ? Contestant.fromArray(array.contestant) : undefined,
             array.is_deleted,
             array.deleted_by,
-            array.contestant ? Contestant.fromArray(array.contestant) : undefined,
             array.created_at,
             array.updated_at
         );
