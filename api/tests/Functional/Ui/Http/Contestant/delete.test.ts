@@ -35,6 +35,6 @@ describe('DELETE /api/contestants/:id/vote/:voteId', () => {
         const vote = await prismaClient.vote.findUnique({where: {id: voteId.toString()}});
         expect(vote?.is_deleted).toBe(true);
         expect(vote?.deleted_at).not.toBeNull();
-        expect(vote?.deleted_by).toBe('123.123.123.123');
+        expect(vote?.deleted_by).toBe('1.1.1.1');
     });
 });
