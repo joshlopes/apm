@@ -43,10 +43,15 @@ export default class OrmVoteRepository implements VoteRepository {
         });
     }
 
-    async delete(id: VoteId): Promise<void> {
-        await this.ormClient.vote.delete({
+    async delete(id: VoteId, ip: string): Promise<void> {
+        await this.ormClient.vote.update({
             where: {
                 id: id.toString()
+            },
+            data: {
+                is_deleted: true
+                deleted_by: ip,
+                deleted_at: new Date()
             }
         });
     }
