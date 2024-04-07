@@ -21,10 +21,9 @@ export const vote: RequestHandler = async (req: Request, resp: Response) => {
             return await handleCommand(
                 new GetContestantCommand(contestantId),
                 resp,
-                (contestant: Contestant) => {
+                () => {
                     return resp.status(200).send({
-                        id: voteId.toString(),
-                        contestant: contestant.toArray()
+                        id: voteId.toString()
                     })
                 }
             )
