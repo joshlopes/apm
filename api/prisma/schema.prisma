@@ -31,3 +31,10 @@ model vote {
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
 }
+
+model blacklisted {
+  id         String   @id @default(uuid())
+  ip         String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}

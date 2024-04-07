@@ -13,6 +13,8 @@ import OrmVoteRepository from "../Orm/Contestant/OrmVoteRepository";
 import VoteContestantCommandHandler
     from "../../Application/Write/Contestant/VoteContestant/VoteContestantCommandHandler";
 import DeleteVoteCommandHandler from "../../Application/Write/Contestant/DeleteVote/DeleteVoteCommandHandler";
+import {BlacklistRepository} from "../../Domain/Blacklist/BlacklistRepository";
+import OrmBlacklistRepository from "../Orm/Blacklist/OrmBlacklistRepository";
 
 const myContainer = new Container();
 
@@ -20,6 +22,7 @@ const myContainer = new Container();
 myContainer.bind<PrismaClient>(TYPES.OrmClient).toConstantValue(new PrismaClient());
 myContainer.bind<ContestantRepository>(TYPES.ContestantRepository).to(OrmContestantRepository);
 myContainer.bind<VoteRepository>(TYPES.VoteRepository).to(OrmVoteRepository);
+myContainer.bind<BlacklistRepository>(TYPES.BlacklistRepository).to(OrmBlacklistRepository);
 
 // Command handlers
 myContainer.bind<CommandHandler>(TYPES.CommandHandler).to(GetContestantCommandHandler);

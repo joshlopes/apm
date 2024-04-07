@@ -10,4 +10,5 @@ export const TYPES = {
     // Repositories
     ContestantRepository: Symbol.for('ContestantRepository'),
     VoteRepository: Symbol.for('VoteRepository'),
+    BlacklistRepository: Symbol.for('BlacklistRepository'),
 }

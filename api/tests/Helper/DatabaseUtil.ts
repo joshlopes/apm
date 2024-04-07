@@ -6,6 +6,7 @@ export default class DatabaseUtil {
 
         await prismaClient.$executeRaw`TRUNCATE TABLE contestant`;
         await prismaClient.$executeRaw`TRUNCATE TABLE vote`;
+        await prismaClient.$executeRaw`TRUNCATE TABLE blacklisted`;
 
         await prismaClient.$executeRaw`SET FOREIGN_KEY_CHECKS=1`;
     }
