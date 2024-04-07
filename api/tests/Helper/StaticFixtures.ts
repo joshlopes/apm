@@ -7,6 +7,8 @@ import {VoteRepository} from "../../src/Domain/Contestant/VoteRepository";
 import Vote from "../../src/Domain/Contestant/Vote";
 import VoteId from "../../src/Domain/Contestant/VoteId";
 import ContestantId from "../../src/Domain/Contestant/ContestantId";
+import Blacklist from "../../src/Domain/Blacklist/Blacklist";
+import {BlacklistRepository} from "../../src/Domain/Blacklist/BlacklistRepository";
 
 export const createContestant = async (): Promise<Contestant> => {
     return myContainer.get<ContestantRepository>(TYPES.ContestantRepository).upsert(
@@ -27,6 +29,15 @@ export const createVote = async(voteId: VoteId, contestant: Contestant): Promise
             voteId,
             '1.1.1.1',
             contestant
+        )
+    )
+}
+
+export const createBlacklist = async(ip: string): Promise<Blacklist> => {
+    return await myContainer.get<BlacklistRepository>(TYPES.BlacklistRepository).create(
+        new Blacklist(
+            uuidv7().toString(),
+            ip
         )
     )
 }
