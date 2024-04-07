@@ -13,7 +13,7 @@ export const deleteVote: RequestHandler = async (req: Request, resp: Response) =
         new DeleteVoteCommand(
             VoteId.fromString(req.params.voteId),
             ContestantId.fromString(req.params.id),
-            req.header('x-real-ip') ?? req.ip ?? ''
+            req.header('x-real-ip') ?? req.body.ip ?? req.ip ?? ''
         ),
         resp,
         () => {

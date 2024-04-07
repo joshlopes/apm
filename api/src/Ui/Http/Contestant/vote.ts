@@ -14,7 +14,7 @@ export const vote: RequestHandler = async (req: Request, resp: Response) => {
         new VoteContestantCommand(
             voteId,
             contestantId,
-            req.body.ip
+            req.header('x-real-ip') ?? req.body.ip ?? req.ip ?? ''
         ),
         resp,
         async () => {
