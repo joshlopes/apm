@@ -17,16 +17,6 @@ export const vote: RequestHandler = async (req: Request, resp: Response) => {
             req.header('x-real-ip') ?? req.body.ip ?? req.ip ?? ''
         ),
         resp,
-        async () => {
-            return await handleCommand(
-                new GetContestantCommand(contestantId),
-                resp,
-                () => {
-                    return resp.status(200).send({
-                        id: voteId.toString()
-                    })
-                }
-            )
-        }
+        () => resp.status(200).send({id: voteId.toString()})
     );
 }
