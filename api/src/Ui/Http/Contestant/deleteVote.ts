@@ -7,6 +7,8 @@ import DeleteVoteCommand from "../../../Application/Write/Contestant/DeleteVote/
 export const deleteVote: RequestHandler = async (req: Request, resp: Response) => {
     console.log(req.ip, req.ips)
 
+    console.log(req.headers)
+
     await handleCommand(
         new DeleteVoteCommand(
             VoteId.fromString(req.params.voteId),
