@@ -31,7 +31,7 @@ export default function App() {
                         <Box sx={{ my: 4 }}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
-                                    <Announcement message='Parem de scammar, please 😠️'/>
+                                    <Announcement message='Esta mensagem é muito importante!'/>
                                 </Grid>
                             </Grid>
                             <Routes>

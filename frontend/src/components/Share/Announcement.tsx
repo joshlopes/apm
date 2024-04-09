@@ -18,7 +18,7 @@ const Announcement: React.FC<AnnouncementProps> = ({ message }) => {
             >
                 <Typography>
                     <AnnouncementIcon fontSize={"small"} />
-                    &nbsp;Anúncio Importante
+                    &nbsp;Comunicação
                 </Typography>
             </AccordionSummary>
             <AccordionDetails>

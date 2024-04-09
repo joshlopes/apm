@@ -13,7 +13,7 @@ export const get: RequestHandler = async (req: Request, resp: Response) => {
                 id: contestant.id.toString(),
                 name: contestant.name,
                 video_url: contestant.videoUrl,
-                votes: contestant.votes?.filter(vote => !vote.is_deleted).length || 0,
+                verified_votes: contestant.verifiedVotes,
                 created_at: contestant.created_at,
                 updated_at: contestant.updated_at
             })
