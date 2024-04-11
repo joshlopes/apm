@@ -4,4 +4,6 @@ export type Contestant = {
     name: string,
     video_url: string,
     thumbnail_url: string,
+    verified_votes: number,
+    updated_at: Date
 }

@@ -4,26 +4,22 @@ import ReactPlayer from 'react-player';
 import {useParams} from "react-router-dom";
 import {useApi} from "../../context/ApiProvider";
 import {Contestant} from "../../types/contestant";
-import {Button, Card, CardContent, CircularProgress, Grid} from "@mui/material";
+import {Button, Card, CardContent, CircularProgress, Grid, Stack, Tooltip} from "@mui/material";
 import {enqueueSnackbar} from "notistack";
 import ShareComponent from "../Share/ShareComponent";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useUserStore} from "../../stores/useUserStore";
 
 const ContestOverview: React.FC = () => {
-    const { getIp } = useUserStore();
     const api = useApi()
     const params = useParams();
     const id = params.id;
     const [contestant, setContestant] = React.useState<Contestant|undefined>();
     const [hasVoted, setHasVoted] = React.useState(localStorage.getItem(`vote${id}`) !== null);
-    const [ip, setIp] = React.useState('');
     const [isVoting, setIsVoting] = React.useState(false);
 
     useEffect(() => {
-        getIp().then(ip => setIp(ip));
-
         api?.get(`/contestants/${id}`)
             .then(response => {
                 setContestant(response.body)
@@ -32,13 +28,13 @@ const ContestOverview: React.FC = () => {
                 enqueueSnackbar('Erro ao carregar concorrente!', {variant: 'error'})
                 console.error(error)
             })
-    }, [id, api, getIp]);
+    }, [id, api]);
 
     const handleVote = () => {
         if (isVoting) return;
 
         setIsVoting(true);
-        api?.post(`/contestants/${id}/vote`, {ip: ip})
+        api?.post(`/contestants/${id}/vote`, {})
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to vote')
@@ -46,15 +42,12 @@ const ContestOverview: React.FC = () => {
                 localStorage.setItem(`vote${id}`, response.body.id);
                 setHasVoted(true)
                 setIsVoting(false);
-                enqueueSnackbar('Voto registado com successo!', {variant: 'success'})
-                if (contestant) {
-                    setContestant({...contestant, votes: contestant.votes + 1});
-                }
+                enqueueSnackbar('Gosto registado para validação, obrigado!', {variant: 'success'})
             })
             .catch(error => {
                 console.error(error)
                 setIsVoting(false);
-                enqueueSnackbar('Erro ao registar voto!', {variant: 'error'})
+                enqueueSnackbar('Erro ao registar gosto!', {variant: 'error'})
             })
     }
 
@@ -63,12 +56,12 @@ const ContestOverview: React.FC = () => {
 
         const voteId = localStorage.getItem(`vote${id}`)
         if (!voteId) {
-            enqueueSnackbar('Voto não encontrado!', {variant: 'error'})
+            enqueueSnackbar('Gosto não encontrado!', {variant: 'error'})
             return
         }
 
         setIsVoting(true);
-        api?.post(`/contestants/${id}/vote/${voteId}/delete`, {ip: ip})
+        api?.post(`/contestants/${id}/vote/${voteId}/delete`, {})
             .then(response => {
                 if (!response.ok) {
                     console.error(response)
@@ -78,16 +71,12 @@ const ContestOverview: React.FC = () => {
                 localStorage.removeItem(`vote${id}`);
                 setHasVoted(false)
                 setIsVoting(false)
-                enqueueSnackbar('Voto removido com successo!', {variant: 'success'})
-
-                if (contestant) {
-                    setContestant({...contestant, votes: contestant.votes - 1});
-                }
+                enqueueSnackbar('Gosto removido com successo!', {variant: 'success'})
             })
             .catch(error => {
                 console.error(error)
                 setIsVoting(false)
-                enqueueSnackbar('Erro ao remover voto!', {variant: 'error'})
+                enqueueSnackbar('Erro ao remover gosto!', {variant: 'error'})
             })
     }
 
@@ -108,11 +97,19 @@ const ContestOverview: React.FC = () => {
                                         height='100%'
                                     />
                                     <Grid container p={1}>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={6}>
                                             <ShareComponent />
                                         </Grid>
-                                        <Grid item xs={12} md={6} container justifyContent="flex-end">
-                                            <Typography variant={'h6'}><b>Gostos</b>: {contestant.votes}</Typography>
+                                        <Grid item xs={6} container justifyContent="flex-end" textAlign={"right"}>
+                                            <Grid item xs={12} md={6} container justifyContent="flex-end">
+                                                <Tooltip
+                                                    title={"Os gostos são verificados periodicamente, depois de validados manualmente."}>
+                                                    <Stack>
+                                                        <Typography variant={'h6'}><VerifiedIcon /><b>Gostos</b>: {contestant.verified_votes}</Typography>
+                                                        <Typography variant={'subtitle2'}>(Actualizado: {new Date(contestant?.updated_at).toLocaleString('pt-PT').replace(', ', ' ')})</Typography>
+                                                    </Stack>
+                                                </Tooltip>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid container spacing={2} sx={{ mt: 2, justifyContent: 'center' }}>
