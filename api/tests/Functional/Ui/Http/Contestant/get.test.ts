@@ -26,6 +26,6 @@ describe('GET /api/contestants/:id', () => {
         // Assert
         expect(response.body.id).toBe(contestant.id.toString())
         expect(response.body.name).toBe(contestant.name)
-        expect(response.body.votes).toBe(0)
+        expect(response.body.verified_votes).toBe(0)
     });
 });
