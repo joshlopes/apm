@@ -7,10 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 
 interface AnnouncementProps {
-    message: string;
+    children: React.ReactNode;
 }
 
-const Announcement: React.FC<AnnouncementProps> = ({ message }) => {
+const Announcement: React.FC<AnnouncementProps> = ({ children }) => {
     return (
         <Accordion sx={{ bgcolor: 'info.main', color: 'common.white', boxSizing: 'border-box'}}>
             <AccordionSummary
@@ -23,7 +23,7 @@ const Announcement: React.FC<AnnouncementProps> = ({ message }) => {
             </AccordionSummary>
             <AccordionDetails>
                 <Typography>
-                    {message}
+                    {children}
                 </Typography>
             </AccordionDetails>
         </Accordion>
