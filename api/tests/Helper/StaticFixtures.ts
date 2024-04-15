@@ -19,7 +19,8 @@ export const createContestant = async (): Promise<Contestant> => {
             'A',
             'http://video.url',
             'http://thumbnail.url',
-            0
+            0,
+            false,
         )
     )
 }
