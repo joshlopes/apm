@@ -15,6 +15,7 @@ model contestant {
   video_url      String
   thumbnail_url  String
   category       String
+  has_ended      Boolean  @default(false)
   verified_votes Int      @default(0)
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt

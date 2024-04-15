@@ -36,6 +36,7 @@ export default class OrmContestantRepository implements ContestantRepository {
             video_url: contestant.videoUrl,
             thumbnail_url: contestant.thumbnailUrl,
             verified_votes: contestant.verifiedVotes,
+            has_ended: contestant.hasEnded,
             updated_at: new Date(),
         };
 

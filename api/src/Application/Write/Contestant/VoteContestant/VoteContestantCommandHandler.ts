@@ -6,6 +6,7 @@ import {VoteRepository} from "../../../../Domain/Contestant/VoteRepository";
 import Vote from "../../../../Domain/Contestant/Vote";
 import ContestantRepository from "../../../../Domain/Contestant/ContestantRepository";
 import {BlacklistRepository} from "../../../../Domain/Blacklist/BlacklistRepository";
+import ContestHasEnded from "../../../../Domain/Contestant/ContestHasEnded";
 
 @injectable()
 export default class VoteContestantCommandHandler implements CommandHandler {
@@ -16,12 +17,18 @@ export default class VoteContestantCommandHandler implements CommandHandler {
     ) {
     }
 
+    /**
+     * @throws ContestHasEnded
+     */
     async handle(command: VoteContestantCommand): Promise<void> {
         if (await this.blacklistRepository.findByIp(command.ip)) {
             throw new Error(`IP ${command.ip} is blacklisted!`);
         }
 
         const contestant = await this.contestantRepository.get(command.contestantId);
+        if (contestant.hasEnded) {
+            throw new ContestHasEnded();
+        }
 
         return this.repository.create(new Vote(command.id, command.ip, contestant));
     }

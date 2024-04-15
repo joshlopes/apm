@@ -114,30 +114,31 @@ const ContestOverview: React.FC = () => {
                                     </Grid>
                                     <Grid container spacing={2} sx={{ mt: 2, justifyContent: 'center' }}>
                                         <Grid item>
-                                            {hasVoted ?
-                                                <Button onClick={handleRemoveVote} color={"error"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }} disabled={isVoting}>
-                                                    {isVoting
-                                                        ? <>
-                                                            <CircularProgress size={24} sx={{ mr: 1 }} />
-                                                            A retirar gosto...
-                                                        </>
-                                                        : <>
-                                                            <DeleteIcon sx={{ mr: 1 }} />
-                                                            Retirar Gosto
-                                                        </>}
-                                                </Button>
-                                                :
-                                                <Button onClick={handleVote} color={"success"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }} disabled={isVoting}>
-                                                    {isVoting
-                                                        ? <>
-                                                            <CircularProgress size={24} sx={{ mr: 1 }} />
-                                                            A enviar...
-                                                        </>
-                                                        : <>
-                                                            <ThumbUpAltIcon sx={{ mr: 1 }} />
-                                                            Gosto
-                                                        </>}
-                                                </Button>
+                                            {contestant && contestant.has_ended
+                                                ? <Typography variant={'h6'} color={"error"}>Votação terminada!</Typography>
+                                                : hasVoted
+                                                    ? <Button onClick={handleRemoveVote} color={"error"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }} disabled={isVoting}>
+                                                        {isVoting
+                                                            ? <>
+                                                                <CircularProgress size={24} sx={{ mr: 1 }} />
+                                                                A retirar gosto...
+                                                            </>
+                                                            : <>
+                                                                <DeleteIcon sx={{ mr: 1 }} />
+                                                                Retirar Gosto
+                                                            </>}
+                                                    </Button>
+                                                    : <Button onClick={handleVote} color={"success"} variant={"contained"} sx={{ fontSize: 'large', padding: '10px 20px' }} disabled={isVoting}>
+                                                        {isVoting
+                                                            ? <>
+                                                                <CircularProgress size={24} sx={{ mr: 1 }} />
+                                                                A enviar...
+                                                            </>
+                                                            : <>
+                                                                <ThumbUpAltIcon sx={{ mr: 1 }} />
+                                                                Gosto
+                                                            </>}
+                                                    </Button>
                                             }
                                         </Grid>
                                     </Grid>
